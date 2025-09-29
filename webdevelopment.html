@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <title>My First Webpage</title>
+
+        <style>
+            body{
+                font-family: Arial, sans-serif;
+                background-color: #f4f9ff;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
+
+            header{
+                background-color: #007acc;
+                color: white;
+                padding: 20px;
+            }
+
+            h1{
+                margin: 0;
+            }
+
+            h2{
+                margin-top: 30px;
+                color: #007acc;
+            }
+
+            p{
+                font-size: 18px;
+                color: #333;
+                margin: 20px;
+            }
+
+            img{
+                width: 250px;
+                margin: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+                transition: transform 0.3s;
+            }
+
+            img:hover{
+                transform: scale(1.1);
+            }
+
+            a{
+                display: inline-block;
+                margin-top: 15px;
+                text-decoration: none;
+                color: #007acc;
+                font-weight: bold;
+            }
+
+            button{
+                margin-top: 30px;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #077acc;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            button:hover{
+                background-color: #005f99;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>Welcome to My First Webpage</h1>
+        </header>
+
+        <p>This is a simple webpage created using <b>HTML, CSS, and JavaScript</b>.</p>
+
+        <h2>Technologies I'm Learning</h2>
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML Logo">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS Logo">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo">
+
+        <p>
+            Learn more about web development by visiting
+            <a href="https://developer.mozilla.org/en-us/docs/Learn" target="_blank">MDN Web Docs</a>.
+        </p>
+
+        <button onclick="showMessage()">Click Me</button>
+
+        <script>
+            function showMessage() {
+                alert("Hello! You clicked the button. 🚀");
+            }
+        </script>
+    </body>
+</html>
