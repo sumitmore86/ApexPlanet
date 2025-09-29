@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermediate Web Development Tasks - Single File</title>
+    
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #007bff;
+        }
+
+        
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                "sidebar"
+                "content";
+            grid-template-rows: auto 1fr;
+            min-height: calc(100vh - 100px); 
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .header, .footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            background-color: #d1e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .flex-nav {
+            list-style: none;
+            padding: 0;
+            display: flex; 
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .flex-nav li a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            display: block;
+        }
+        .flex-nav li a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .content {
+            grid-area: content;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-areas: "sidebar content";
+                grid-template-columns: 250px 1fr;
+            }
+            
+            .flex-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .contact-form {
+            max-width: 500px;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; 
+        }
+
+        .contact-form button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .contact-form button:hover {
+            background-color: #218838;
+        }
+
+        .message-area {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .message-area.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message-area.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .todo-app {
+            margin-top: 20px;
+        }
+
+        #taskInput {
+            padding: 10px;
+            margin-right: 10px;
+            width: calc(60% - 10px); 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #addTaskBtn {
+            padding: 10px 15px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #addTaskBtn:hover {
+            background-color: #e0a800;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .task-item button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .task-item button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Intermediate HTML, CSS, and JavaScript Project</h1>
+    </header>
+
+    <div class="grid-container">
+        
+        <nav class="sidebar">
+            <h2>Navigation</h2>
+            <ul class="flex-nav">
+                <li><a href="#contact">Contact Form</a></li>
+                <li><a href="#todo">To-Do List</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+
+            <section id="contact">
+                <h2>1. Create a Contact Form & Add Validation</h2>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Submit Inquiry</button>
+                    <p id="validation-message" class="message-area"></p>
+                </form>
+            </section>
+
+            <hr>
+
+            <section id="todo">
+                <h2>2. Develop a Dynamic To-Do List</h2>
+                <div class="todo-app">
+                    <input type="text" id="taskInput" placeholder="Add a new task..." aria-label="New task">
+                    <button id="addTaskBtn">Add Task</button>
+                    <ul id="taskList" class="task-list">
+                        </ul>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 ApexPlanet Tasks</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const contactForm = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const validationMessage = document.getElementById('validation-message');
+
+            
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                validationMessage.textContent = '';
+                validationMessage.className = 'message-area';
+
+                let isValid = true;
+                let errors = [];
+
+                if (nameInput.value.trim() === '') {
+                    errors.push('Name is required.');
+                    isValid = false;
+                }
+                if (emailInput.value.trim() === '') {
+                    errors.push('Email is required.');
+                    isValid = false;
+                }
+                if (messageInput.value.trim() === '') {
+                    errors.push('Message is required.');
+                    isValid = false;
+                }
+
+                if (emailInput.value.trim() !== '' && !isValidEmail(emailInput.value.trim())) {
+                    errors.push('Please enter a valid email address.');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    validationMessage.textContent = 'Form submitted successfully! Thank you.';
+                    validationMessage.classList.add('success');
+                    contactForm.reset(); 
+                } else {
+                    validationMessage.innerHTML = 'Submission failed:<br>' + errors.join('<br>');
+                    validationMessage.classList.add('error');
+                }
+            });
+
+            
+            const taskInput = document.getElementById('taskInput');
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            const taskList = document.getElementById('taskList');
+
+            function addTask() {
+                const taskText = taskInput.value.trim();
+
+                if (taskText === '') {
+                    alert('Please enter a task.');
+                    return;
+                }
+
+                const listItem = document.createElement('li');
+                listItem.className = 'task-item';
+
+                const taskSpan = document.createElement('span');
+                taskSpan.textContent = taskText;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                
+                deleteButton.addEventListener('click', function() {
+                    taskList.removeChild(listItem);
+                });
+
+                listItem.appendChild(taskSpan);
+                listItem.appendChild(deleteButton);
+                taskList.appendChild(listItem);
+
+                taskInput.value = '';
+                taskInput.focus(); 
+            }
+
+            addTaskBtn.addEventListener('click', addTask);
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
