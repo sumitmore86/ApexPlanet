@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full Project Implementation - ApexPlanet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #00796b;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    nav { margin-top: 10px; }
+    nav button {
+      background: #004d40;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    nav button:hover { background: #00695c; }
+    section { display: none; padding: 20px; animation: fadeIn 0.5s; }
+    section.active { display: block; }
+    footer {
+      background: #004d40;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    /* To-Do List styles */
+    #todoApp input, #todoApp button { padding: 10px; margin: 5px; }
+    #taskList li {
+      list-style: none;
+      background: #e0f2f1;
+      margin: 5px auto;
+      padding: 10px;
+      width: 250px;
+      cursor: pointer;
+    }
+    #taskList li:hover { background: #b2dfdb; }
+
+    /* Product Listing styles */
+    .controls select { padding: 8px; margin: 10px; }
+    .grid { display: flex; flex-wrap: wrap; justify-content: center; }
+    .product {
+      background: white;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 10px;
+      width: 220px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:hover { transform: scale(1.05); }
+    .product img {
+      width: 100%;
+      border-radius: 8px;
+      height: 150px;
+      object-fit: cover;
+      background: #f2f2f2;
+    }
+    .product h3 { margin: 10px 0 5px; font-size: 1.05rem; }
+    .product p { margin: 5px 0; color: #444; }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    /* small responsive tweak */
+    @media (max-width: 600px) {
+      .product { width: 90%; }
+      footer { position: static; margin-top: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Full Project Implementation</h1>
+    <p>ApexPlanet Software Pvt Ltd | Timeline: 9 Days | Task - 4</p>
+    <nav>
+      <button onclick="showSection('portfolio')">Portfolio</button>
+      <button onclick="showSection('todoApp')">To-Do App</button>
+      <button onclick="showSection('productPage')">Product Page</button>
+    </nav>
+  </header>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="active">
+    <h2>👨‍💻 Personal Portfolio</h2>
+    <p>Hello! I'm <strong>Sumit More</strong>, a front-end web developer passionate about creating beautiful and responsive websites.</p>
+    <h3>About</h3>
+    <p>I specialize in HTML, CSS, JavaScript, and love building user-friendly interfaces.</p>
+    <h3>Projects</h3>
+    <ul>
+      <li>🗒️ To-Do App with Local Storage</li>
+      <li>🛍️ Product Listing Page</li>
+      <li>🌐 Portfolio Website</li>
+    </ul>
+    <h3>Contact</h3>
+    <form onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+      <input type="text" placeholder="Your Name" required><br><br>
+      <input type="email" placeholder="Your Email" required><br><br>
+      <textarea placeholder="Your Message" required></textarea><br><br>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <!-- To-Do App Section -->
+  <section id="todoApp">
+    <h2>🗒️ To-Do / Note-Taking App</h2>
+    <input type="text" id="taskInput" placeholder="Enter a new task" />
+    <button id="addTaskBtn">Add Task</button>
+    <ul id="taskList"></ul>
+  </section>
+
+  <!-- Product Listing Page -->
+  <section id="productPage">
+    <h2>🛍️ Product Listing Page</h2>
+    <div class="controls">
+      <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+        <option value="books">Books</option>
+      </select>
+
+      <select id="sortOption">
+        <option value="default">Sort by</option>
+        <option value="priceAsc">Price: Low to High</option>
+        <option value="priceDesc">Price: High to Low</option>
+        <option value="rating">Rating</option>
+      </select>
+    </div>
+
+    <div id="productContainer" class="grid"></div>
+  </section>
+
+  <footer>&copy; 2025 ApexPlanet | Developed by Sumit More</footer>
+
+  <script>
+    // Section Switcher
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // To-Do App Logic
+    const input = document.getElementById('taskInput');
+    const btn = document.getElementById('addTaskBtn');
+    const list = document.getElementById('taskList');
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      list.innerHTML = '';
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.textContent = task;
+        li.addEventListener('click', () => removeTask(index));
+        list.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      if (input.value.trim() === '') return;
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.push(input.value.trim());
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      input.value = '';
+      loadTasks();
+    }
+
+    function removeTask(index) {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    btn.addEventListener('click', addTask);
+    window.addEventListener('load', loadTasks);
+
+    // Product Listing Logic (with corrected jeans image)
+    const products = [
+      { name: "Laptop", category: "electronics", price: 60000, rating: 4.5, img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" },
+      { name: "T-shirt", category: "clothing", price: 800, rating: 4.1, img: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=400&q=80" },
+      { name: "Smartphone", category: "electronics", price: 25000, rating: 4.7, img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80" },
+      { name: "Book - JavaScript Guide", category: "books", price: 500, rating: 4.3, img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80" },
+      // Corrected jeans image (more clearly jeans / apparel)
+      { name: "Jeans", category: "clothing", price: 1200, rating: 4.2, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=400&q=80" }
+    ];
+
+    const container = document.getElementById("productContainer");
+    const filter = document.getElementById("categoryFilter");
+    const sort = document.getElementById("sortOption");
+
+    function displayProducts(items) {
+      container.innerHTML = "";
+      items.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${p.img}" alt="${escapeHtml(p.name)}">
+          <h3>${escapeHtml(p.name)}</h3>
+          <p>₹${p.price.toLocaleString()}</p>
+          <p>⭐ ${p.rating}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function applyFilterSort() {
+      let filtered = [...products];
+      if (filter.value !== "all") filtered = filtered.filter(p => p.category === filter.value);
+      if (sort.value === "priceAsc") filtered.sort((a,b)=>a.price-b.price);
+      else if (sort.value === "priceDesc") filtered.sort((a,b)=>b.price-a.price);
+      else if (sort.value === "rating") filtered.sort((a,b)=>b.rating-a.rating);
+      displayProducts(filtered);
+    }
+
+    filter.addEventListener('change', applyFilterSort);
+    sort.addEventListener('change', applyFilterSort);
+
+    displayProducts(products);
+
+    // small utility to avoid XSS if product names change
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, function(m) {
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
+      });
+    }
+  </script>
+</body>
+</html>
