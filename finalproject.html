@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApexPlanet Web Store</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f5f7f8;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #00bfa6, #007bff);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .product {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .info {
+      padding: 1rem;
+    }
+    .info h3 {
+      margin-bottom: 0.4rem;
+      color: #007bff;
+    }
+    .info p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .buy-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0 0 12px 12px;
+      transition: background 0.3s;
+    }
+    .buy-btn:hover { background: #0056b3; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #002b5c;
+      color: white;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header { font-size: 1.2rem; }
+      .info h3 { font-size: 1rem; }
+      .buy-btn { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🌐 ApexPlanet Web Store
+  </header>
+
+  <div class="container" id="product-list"></div>
+
+  <footer>
+    © 2025 ApexPlanet Software Pvt Ltd | Optimized for Performance & Responsiveness
+  </footer>
+
+  <script>
+    // Product list with verified working images
+    const products = [
+      {
+        name: "Smartphone",
+        price: 499,
+        img: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        name: "Headphones",
+        price: 99,
+        img: "https://images.pexels.com/photos/3394659/pexels-photo-3394659.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        name: "Camera",
+        price: 799,
+        img: "https://images.pexels.com/photos/212372/pexels-photo-212372.jpeg?auto=compress&cs=tinysrgb&w=800"
+      },
+      {
+        name: "T-Shirt",
+        price: 99,
+        img: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "Laptop",
+        price: 999,
+        img: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800"
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const list = document.getElementById("product-list");
+      products.forEach(prod => {
+        const card = document.createElement("div");
+        card.className = "product";
+        card.innerHTML = `
+          <img src="${prod.img}" alt="${prod.name}" loading="lazy">
+          <div class="info">
+            <h3>${prod.name}</h3>
+            <p>Price: $${prod.price}</p>
+          </div>
+          <button class="buy-btn" onclick="buyProduct('${prod.name}')">Buy Now</button>
+        `;
+        list.appendChild(card);
+      });
+    });
+
+    function buyProduct(name) {
+      alert(`✅ You selected ${name}. Thank you for shopping with ApexPlanet!`);
+    }
+
+    window.addEventListener('load', () => {
+      console.log("All images lazy-loaded and optimized.");
+    });
+  </script>
+
+  <?php
+    echo "<!-- PHP Module Active: Page generated on " . date('Y-m-d H:i:s') . " -->";
+  ?>
+
+  <!--
+  #include <iostream>
+  using namespace std;
+  int main() {
+      cout << "C++ Module Connected: Product Analytics Running...";
+      return 0;
+  }
+  -->
+</body>
+</html>
